@@ -10,36 +10,33 @@ import {
   TextInput,
 } from "react-native";
 
+export default function StudentLoginScreen() {
 
-export default function StudentRegisterScreen() {
   return (
     <View style={styles.PublicLogin}>
       <View style={styles.PublicLoginTop}>
         <Image
-          source={require("./../../../assets/undraw_Mobile_login_re_9ntv.png")}
+          source={require("../../../../assets/undraw_Mobile_login_re_9ntv.png")}
           style={styles.homeImg}
         />
       </View>
 
       <View style={styles.PublicLoginBottom}>
-        <TextInput placeholder="Name" style={styles.input} />
         <TextInput placeholder="Register Id" style={styles.input} />
-        <TextInput placeholder="Email" style={styles.input} />
-        <TextInput placeholder="Mobile No." style={styles.input} />
         <TextInput placeholder="Password" style={styles.input} />
 
-        {/* <Text style={styles.forgotText}>Forgot Password ?</Text> */}
+        <Text style={styles.forgotText}>Forgot Password ?</Text>
 
         <View style={styles.loginButtonWrapper}>
           <TouchableOpacity>
-            <Text style={styles.loginButtonText}>Register</Text>
+            <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
         </View>
 
         <View>
           <Text style={styles.bottomText}>
-            Already have an account ?{" "}
-            <Link to={{screen : 'Student Login'}}><Text style={styles.createOne}>Login</Text></Link>
+            Don't have an account ?{" "}
+            <Link to={{screen : 'Student Register'}}><Text style={styles.createOne}>Create One</Text></Link>
           </Text>
         </View>
       </View>
@@ -53,19 +50,20 @@ const styles = StyleSheet.create({
   },
   PublicLoginTop: {
     flex: 1,
+    justifyContent: "center",
     alignItems: "center",
   },
   PublicLoginBottom: {
-    flex: 3,
+    flex: 2,
     justifyContent: "center",
     alignItems: "center",
   },
   homeImg: {
-    width: "50%",
-    height: "65%",
+    width: "65%",
+    height: "70%",
     borderRadius : 10,
     marginHorizontal: 20,
-    marginTop: "15%",
+    marginTop: "25%",
   },
   input: {
     width: "80%",
@@ -87,8 +85,7 @@ const styles = StyleSheet.create({
   loginButtonText: {
     width: "100%",
     backgroundColor: "#3A1347",
-    marginVertical: 10,
-    marginBottom : 7,
+    marginVertical: 20,
     color: "white",
     textAlign: "center",
     paddingVertical: 15,

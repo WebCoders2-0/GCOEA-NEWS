@@ -10,23 +10,25 @@ import {
   TextInput,
 } from "react-native";
 
-export default function PublicRegisterScreen() {
-  // const Stack = createNativeStackNavigator();
 
+export default function StudentRegisterScreen() {
   return (
     <View style={styles.PublicLogin}>
       <View style={styles.PublicLoginTop}>
         <Image
-          source={require("./../../../assets/undraw_Mobile_login_re_9ntv.png")}
+          source={require("../../../../assets/undraw_Mobile_login_re_9ntv.png")}
           style={styles.homeImg}
         />
       </View>
 
       <View style={styles.PublicLoginBottom}>
         <TextInput placeholder="Name" style={styles.input} />
+        <TextInput placeholder="Register Id" style={styles.input} />
         <TextInput placeholder="Email" style={styles.input} />
         <TextInput placeholder="Mobile No." style={styles.input} />
         <TextInput placeholder="Password" style={styles.input} />
+
+        {/* <Text style={styles.forgotText}>Forgot Password ?</Text> */}
 
         <View style={styles.loginButtonWrapper}>
           <TouchableOpacity>
@@ -37,7 +39,7 @@ export default function PublicRegisterScreen() {
         <View>
           <Text style={styles.bottomText}>
             Already have an account ?{" "}
-            <Link to={{screen : 'Public Login'}}><Text style={styles.createOne}>Login</Text></Link>
+            <Link to={{screen : 'Student Login'}}><Text style={styles.createOne}>Login</Text></Link>
           </Text>
         </View>
       </View>

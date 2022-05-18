@@ -15,7 +15,7 @@ export default function PublicLoginScreen() {
     <View style={styles.PublicLogin}>
       <View style={styles.PublicLoginTop}>
         <Image
-          source={require("../../../assets/undraw_secure_login_pdn4.png")}
+          source={require("../../../../assets/undraw_secure_login_pdn4.png")}
           style={styles.homeImg}
         />
       </View>
