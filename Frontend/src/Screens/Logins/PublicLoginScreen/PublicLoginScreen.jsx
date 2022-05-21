@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { Link } from '@react-navigation/native';
 
 import {
@@ -17,6 +16,7 @@ export default function PublicLoginScreen() {
         <Image
           source={require("../../../../assets/undraw_secure_login_pdn4.png")}
           style={styles.homeImg}
+          resizeMode='contain'
         />
       </View>
 
@@ -35,7 +35,7 @@ export default function PublicLoginScreen() {
         <View>
           <Text style={styles.bottomText}>
             Don't have an account ?{" "}
-            <Link to={{screen : 'Public Register'}}><Text style={styles.createOne}>Create One</Text></Link>
+            <Link to='/publicRegister'><Text style={styles.createOne}>Create One</Text></Link>
           </Text>
         </View>
       </View>
@@ -46,6 +46,7 @@ export default function PublicLoginScreen() {
 const styles = StyleSheet.create({
   PublicLogin: {
     flex: 1,
+    height:'100%',
   },
   PublicLoginTop: {
     flex: 1,

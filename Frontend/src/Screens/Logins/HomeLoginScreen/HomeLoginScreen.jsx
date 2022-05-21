@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { Link } from '@react-navigation/native';
 
@@ -8,8 +8,9 @@ export default function HomeLoginScreen() {
       <View style={styles.top}>
         <Text>
           <Image
-            source={require("./../../../assets/happy.png")}
+            source={require("./../../../../assets/happy.png")}
             style={styles.simileImg}
+            resizeMode='contain'
           />
         </Text>
         <Text style={styles.HeadingText}>GECOEA NEWS</Text>
@@ -17,15 +18,11 @@ export default function HomeLoginScreen() {
 
       <View style={styles.bottom}>
         <TouchableOpacity style={styles.loginButtons}>
-          <Text style={styles.buttonText}><Link to={{screen : 'Student Login'}}>Login As Student</Link></Text>
+          <Text style={styles.buttonText}><Link to='/studentLogin'>Login As Student</Link></Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.loginButtons}>
-          <Text style={styles.buttonText}><Link to={{screen : 'Student Login'}}>Login As Admin</Link></Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.loginButtons}>
-          <Text style={styles.buttonText}><Link to={{screen : 'Public Login'}}>Login As Public</Link></Text>
+          <Text style={styles.buttonText}><Link to='/publicLogin'>Login As Public</Link></Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -41,11 +38,11 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     color: "white",
-    marginVertical: 15,
+    marginVertical: 10,
   },
   simileImg: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 100,
     borderRadius : 20,
   },
   top: {
@@ -59,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   loginButtons: {
-    width: "80%",
+    width: "70%",
     backgroundColor: "#D6CDFE",
     marginBottom: 15,
     borderRadius: 10,

@@ -19,6 +19,7 @@ export default function PublicRegisterScreen() {
         <Image
           source={require("../../../../assets/undraw_Mobile_login_re_9ntv.png")}
           style={styles.homeImg}
+          resizeMode='contain'
         />
       </View>
 
@@ -37,7 +38,7 @@ export default function PublicRegisterScreen() {
         <View>
           <Text style={styles.bottomText}>
             Already have an account ?{" "}
-            <Link to={{screen : 'Public Login'}}><Text style={styles.createOne}>Login</Text></Link>
+            <Link to='/publicLogin'><Text style={styles.createOne}>Login</Text></Link>
           </Text>
         </View>
       </View>

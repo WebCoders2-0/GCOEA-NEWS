@@ -18,6 +18,7 @@ export default function StudentRegisterScreen() {
         <Image
           source={require("../../../../assets/undraw_Mobile_login_re_9ntv.png")}
           style={styles.homeImg}
+          resizeMode='contain'
         />
       </View>
 
@@ -39,7 +40,7 @@ export default function StudentRegisterScreen() {
         <View>
           <Text style={styles.bottomText}>
             Already have an account ?{" "}
-            <Link to={{screen : 'Student Login'}}><Text style={styles.createOne}>Login</Text></Link>
+            <Link to='/studentLogin'><Text style={styles.createOne}>Login</Text></Link>
           </Text>
         </View>
       </View>

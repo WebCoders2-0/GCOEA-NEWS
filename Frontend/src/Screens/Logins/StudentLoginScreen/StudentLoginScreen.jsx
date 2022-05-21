@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { Link } from '@react-navigation/native';
 
 import {
@@ -18,6 +17,7 @@ export default function StudentLoginScreen() {
         <Image
           source={require("../../../../assets/undraw_Mobile_login_re_9ntv.png")}
           style={styles.homeImg}
+          resizeMode='contain'
         />
       </View>
 
@@ -36,7 +36,7 @@ export default function StudentLoginScreen() {
         <View>
           <Text style={styles.bottomText}>
             Don't have an account ?{" "}
-            <Link to={{screen : 'Student Register'}}><Text style={styles.createOne}>Create One</Text></Link>
+            <Link to='/studentRegister'><Text style={styles.createOne}>Create One</Text></Link>
           </Text>
         </View>
       </View>
@@ -47,6 +47,7 @@ export default function StudentLoginScreen() {
 const styles = StyleSheet.create({
   PublicLogin: {
     flex: 1,
+    height:100,
   },
   PublicLoginTop: {
     flex: 1,
