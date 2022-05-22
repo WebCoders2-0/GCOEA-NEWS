@@ -6,13 +6,11 @@ export default function HomeLoginScreen() {
   return (
     <View style={styles.HomeLoginContainer}>
       <View style={styles.top}>
-        <Text>
           <Image
             source={require("./../../../../assets/happy.png")}
             style={styles.simileImg}
             resizeMode='contain'
           />
-        </Text>
         <Text style={styles.HeadingText}>GECOEA NEWS</Text>
       </View>
 
@@ -41,7 +39,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   simileImg: {
-    width: 50,
+    width: 100,
     height: 100,
     borderRadius : 20,
   },

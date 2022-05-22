@@ -2,7 +2,7 @@ import { View, Text,TouchableOpacity,StyleSheet } from 'react-native';
 import React from 'react';
 import ScreenHeader from '../../component/Header/ScreenHeader';
 import { Link } from '@react-navigation/native';
-import Search from '../../component/Search';
+import Search from '../../component/Search/Search';
 import NewsCards from '../../component/NewsCards/NewsCards'
 
 const Home = () => {

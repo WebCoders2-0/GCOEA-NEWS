@@ -2,6 +2,7 @@ import { View, Text,StyleSheet,TouchableOpacity } from 'react-native';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import ScreenHeader from '../../component/Header/ScreenHeader';
+import  Icon  from 'react-native-vector-icons/FontAwesome';
 
 const ScreenSettings = () => {
   return (
@@ -11,23 +12,23 @@ const ScreenSettings = () => {
       <View style={styles.cardDetails}>
         <TouchableOpacity style={styles.Card}>
           <Text style={styles.cardName}>Notification</Text>
-          <Text style={styles.cardArrow}> {'>'} </Text>
+          <Text style={styles.cardArrow}> <Icon name="angle-right" size={30} color="black" /> </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.Card}>
           <Text style={styles.cardName}>Change Password</Text>
-          <Text style={styles.cardArrow}> {'>'} </Text>
+          <Text style={styles.cardArrow}> <Icon name="angle-right" size={30} color="black" /> </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.Card}>
           <Text style={styles.cardName}>Profile Changes</Text>
-          <Text style={styles.cardArrow}> {'>'} </Text>
+          <Text style={styles.cardArrow}> <Icon name="angle-right" size={30} color="black" /> </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.Card}>
           <Text style={styles.cardName}>Feedback</Text>
-          <Text style={styles.cardArrow}> {'>'} </Text>
+          <Text style={styles.cardArrow}> <Icon name="angle-right" size={30} color="black" /> </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.Card}>
           <Text style={styles.cardName}>Logout</Text>
-          <Text style={styles.cardArrow}> {'>'} </Text>
+          <Text style={styles.cardArrow}> <Icon name="angle-right" size={30} color="black" /> </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -53,9 +54,8 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'space-between',
       alignItems:'center',
-      padding:10,
-      paddingVertical:20,
-      backgroundColor:'gray',
+      padding:20,
+      backgroundColor:'#E4E4E4',
       margin:10,
       borderRadius:10,
       shadowColor: '#7F5DF0',

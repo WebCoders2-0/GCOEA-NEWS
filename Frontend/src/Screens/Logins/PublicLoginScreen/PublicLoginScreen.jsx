@@ -7,17 +7,23 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  ScrollView
 } from "react-native";
 
 export default function PublicLoginScreen() {
   return (
-    <View style={styles.PublicLogin}>
+    <ScrollView style={styles.PublicLogin}>
       <View style={styles.PublicLoginTop}>
         <Image
-          source={require("../../../../assets/undraw_secure_login_pdn4.png")}
+          source={require("../../../../assets/login.png")}
           style={styles.homeImg}
           resizeMode='contain'
         />
+
+        <View style={styles.publicLoginHeadingSection}>
+          <Text style={styles.publicLoginHeading}>Login</Text>
+          <Text style={styles.publicLoginPara}>Login as public and enjoy the app</Text>
+        </View>
       </View>
 
       <View style={styles.PublicLoginBottom}>
@@ -39,45 +45,59 @@ export default function PublicLoginScreen() {
           </Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  PublicLogin: {
-    flex: 1,
-    height:'100%',
-  },
   PublicLoginTop: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
+  publicLoginHeadingSection:{
+    alignItems:'center',
+    margin:20
+  },
+  publicLoginHeading:{
+    fontWeight:'700',
+    fontSize:30,
+  },
+  publicLoginPara:{
+    color:'gray',
+  },
   PublicLoginBottom: {
-    flex: 2,
     justifyContent: "center",
     alignItems: "center",
   },
   homeImg: {
-    width: "70%",
-    height: "70%",
+    width: 180,
+    height: 180,
     borderRadius : 10,
     marginHorizontal: 20,
     marginTop: "25%",
   },
   input: {
     width: "80%",
-    margin: 15,
-    height: 40,
-    borderColor: "#7a42f4",
+    margin: 10,
+    height: 50,
+    borderColor: "#3A1347",
     borderWidth: 1,
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
+    shadowColor: '#3A1347',
+    shadowOffset: {
+        width: 0,
+        height: 5
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 0.5,
+    elevation: 3
   },
   forgotText: {
     width: "80%",
     textAlign: "right",
+    color:'blue'
   },
   loginButtonWrapper: {
     width: "80%",

@@ -1,20 +1,19 @@
 import { View, Text,StyleSheet,Image,TouchableOpacity } from 'react-native';
 import React from 'react';
 import {StatusBar} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ScreenHeader = () => {
   return (
     <View style={styles.headerContainer}>
         <TouchableOpacity style={styles.leftContainer}>
-            <Image source={require('../../../assets/icon.png')} resizeMode='contain'
-            style={styles.leftImage} />
+            <Icon name="bars" size={25} color="#3A1347" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.MiddleContainer}>
             <Text style={{color:'black',fontWeight:'700',fontSize:22}}>GCOEA-NEWS</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.RightContainer}>
-            <Image source={require('../../../assets/icon.png')} resizeMode='contain'
-            style={styles.rightImage} />
+            <Icon name="bell" size={25} color="#3A1347" />
         </TouchableOpacity>
     </View>
   )

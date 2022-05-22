@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text,StyleSheet,Image,TouchableOpacity, Settings } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 // ======================= login screen =====================================
 
@@ -22,12 +22,19 @@ import About from '../../Screens/About/About';
 import Home from '../../Screens/HomeScreen/Home';
 // ---------------main screens ------------------------------- //
 
+// ======================== user screen ======================= //
+
+import AddNews from '../../Screens/AddNews/AddNews';
+import AllNews from '../../Screens/AllNews/AllNews';
+import ViewNews from '../../Screens/ViewNews/ViewNews';
+
+// ======================== user screen ======================= //
 const Stack = createNativeStackNavigator();
 
 
 const Tab = createBottomTabNavigator();
 
-const CustomerTabBarButton = ({childern,onPress}) =>
+const CustomerTabBarButton = ({children,onPress}) =>
 {
     return (
         <TouchableOpacity  onPress={onPress} style={{
@@ -44,7 +51,7 @@ const CustomerTabBarButton = ({childern,onPress}) =>
                 borderWidth:8,
                 borderColor:'#fff'
             }}>
-                {childern}
+                {children}
             </View>
         </TouchableOpacity>
     )
@@ -81,12 +88,7 @@ const Tabs = () => {
                    justifyContent:'center',
                    top:10,
                }}>
-                   <Image source={require('../../../assets/icon.png')} resizeMode='contain'
-                   style ={{
-                       width:25,
-                       height:25,
-                       tintColor:focused ? "#e32f45" : '#fff',
-                   }} />
+                   <Icon name="user" size={30} color={focused ? "#e32f45" : '#fff'} />
                    <Text style={{color:focused ? '#e32f45' : '#fff', fontSize:12}}>Profile</Text>
                </View>)
            },
@@ -100,12 +102,7 @@ const Tabs = () => {
                     justifyContent:'center',
                     top:10,
                 }}>
-                    <Image source={require('../../../assets/icon.png')} resizeMode='contain'
-                    style ={{
-                        width:25,
-                        height:25,
-                        tintColor:focused ? "#e32f45" : '#fff',
-                    }} />
+                    <Icon name="bookmark" size={30} color={focused ? "#e32f45" : '#fff'} />
                     <Text style={{color:focused ? '#e32f45' : '#fff', fontSize:12}}>Favorite</Text>
                 </View>)
             }
@@ -115,14 +112,7 @@ const Tabs = () => {
         options={{
             tabBarIcon:({focused}) =>
             {
-                return (
-                    <Image source={require('../../../assets/icon.png')} resizeMode='contain'
-                    style ={{
-                        width:25,
-                        height:25,
-                        tintColor:'#fff',
-                    }} />
-                   )
+                return (<Icon name="home" size={30} color={focused ? "#e32f45" : '#fff'} />)
             },
             tabBarButton:(props) =>
             {
@@ -140,12 +130,7 @@ const Tabs = () => {
                     justifyContent:'center',
                     top:10,
                 }}>
-                    <Image source={require('../../../assets/icon.png')} resizeMode='contain'
-                    style ={{
-                        width:25,
-                        height:25,
-                        tintColor:focused ? "#e32f45" : '#fff',
-                    }} />
+                    <Icon name="address-card" size={30} color={focused ? "#e32f45" : '#fff'} />
                     <Text style={{color:focused ? '#e32f45' : '#fff', fontSize:12}}>About</Text>
                 </View>)
             }
@@ -158,12 +143,8 @@ const Tabs = () => {
                    justifyContent:'center',
                    top:10,
                }}>
-                   <Image source={require('../../../assets/icon.png')} resizeMode='contain'
-                   style ={{
-                       width:25,
-                       height:25,
-                       tintColor:focused ? "#e32f45" : '#fff',
-                   }} />
+
+                    <Icon name="gear" size={30} color={focused ? "#e32f45" : '#fff'} />
                    <Text style={{color:focused ? '#e32f45' : '#fff', fontSize:12}}>Settings</Text>
                </View>)
            }
@@ -182,6 +163,9 @@ function AnotherNevigator() {
           <Stack.Screen name="studentLogin" component={StudentLoginScreen} options={{ headerShown: false }}/> 
           <Stack.Screen name="publicLogin" component={PublicLoginScreen} options={{ headerShown: false }}/> 
           <Stack.Screen name="publicRegister" component={PublicRegisterScreen} options={{ headerShown: false }}/> 
+          <Stack.Screen name="addNews" component={AddNews} options={{ headerShown: false }}/> 
+          <Stack.Screen name="allNews" component={AllNews} options={{ headerShown: false }}/> 
+          <Stack.Screen name="viewNews" component={ViewNews} options={{ headerShown: false }}/> 
        </Stack.Navigator>
     );
   }

@@ -8,19 +8,24 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  ScrollView
 } from "react-native";
 
 export default function PublicRegisterScreen() {
   // const Stack = createNativeStackNavigator();
 
   return (
-    <View style={styles.PublicLogin}>
+    <ScrollView style={styles.PublicLogin}>
       <View style={styles.PublicLoginTop}>
         <Image
-          source={require("../../../../assets/undraw_Mobile_login_re_9ntv.png")}
+          source={require("../../../../assets/login.png")}
           style={styles.homeImg}
           resizeMode='contain'
         />
+          <View style={styles.publicRegisterHeadingSection}>
+            <Text style={styles.publicRegisterHeading}>Register</Text>
+            <Text style={styles.publicRegisterPara}>Register as public and enjoy the app</Text>
+        </View>
       </View>
 
       <View style={styles.PublicLoginBottom}>
@@ -42,35 +47,41 @@ export default function PublicRegisterScreen() {
           </Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  PublicLogin: {
-    flex: 1,
-  },
   PublicLoginTop: {
-    flex: 1,
     alignItems: "center",
   },
   PublicLoginBottom: {
-    flex: 3,
     justifyContent: "center",
     alignItems: "center",
   },
+  publicRegisterHeadingSection:{
+    alignItems:'center',
+    margin:20,
+  },
+  publicRegisterHeading:{
+    fontWeight:'700',
+    fontSize:30,
+  },
+  publicRegisterPara:{
+    color:'gray',
+  },
   homeImg: {
-    width: "50%",
-    height: "65%",
+    width: 150,
+    height: 150,
     borderRadius : 10,
     marginHorizontal: 20,
-    marginTop: "15%",
+    marginTop: 80,
   },
   input: {
     width: "80%",
-    margin: 15,
-    height: 40,
-    borderColor: "#7a42f4",
+    margin: 10,
+    height: 45,
+    borderColor: "#3A1347",
     borderWidth: 1,
     borderRadius: 5,
     paddingVertical: 10,

@@ -3,34 +3,42 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-const NewsCard = ({ title, img, datetime }) =>{
+const UserCardSection = ({ title, img, datetime }) =>{
     return (
         <View style={styles.newsCardContainer}>
         <TouchableOpacity style={styles.newsCardLeft}>
             <Image source={img} style={styles.newsImage} />
         </TouchableOpacity>
         <View style={styles.newsCardRight}>
-            <TouchableOpacity style={styles.newsTitleSection}>
+            <TouchableOpacity>
                 <Text style={styles.Newstitle}>{title}</Text>
             </TouchableOpacity>
             <Text style={styles.Newsdatetime}>{datetime}</Text>
-            <TouchableOpacity style={styles.favoriteImg}>
-                <Icon name="heart" size={25} color="#3A1347" />
-            </TouchableOpacity>
+            <View style={styles.favoriteImg}>
+                <TouchableOpacity style={styles.icons}>
+                    <Icon name="trash" size={25} color="red" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.icons}>
+                    <Icon name="edit" size={25} color="green" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.icons}>
+                    <Icon name="heart" size={25} color="#3A1347" />
+                </TouchableOpacity>
+            </View>
         </View>
     </View>
 
     )
 }
 
-const NewsCards = () => {
+const UserCard = () => {
     return (
         <ScrollView>
-            <NewsCard title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <NewsCard title={'Hello world Gcoea rhrrr'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <NewsCard title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <NewsCard title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <NewsCard title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
+            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
+            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
+            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
+            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
+            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
         </ScrollView>
     )
 }
@@ -79,13 +87,17 @@ const styles = StyleSheet.create({
     },
     favoriteImg: {
         position: 'absolute',
-        width: 30,
-        height: 30,
+        width: 45,
+        height: 45,
         bottom: 10,
         top: 100,
-        left:140,
+        left:60,
+        flexDirection:'row',
+    },
+    icons:{
+        marginHorizontal:8
     }
 
 })
 
-export default NewsCards;
+export default UserCard;

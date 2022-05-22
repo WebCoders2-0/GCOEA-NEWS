@@ -8,18 +8,24 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  ScrollView
 } from "react-native";
 
 
 export default function StudentRegisterScreen() {
   return (
-    <View style={styles.PublicLogin}>
+    <ScrollView style={styles.PublicLogin}>
       <View style={styles.PublicLoginTop}>
         <Image
-          source={require("../../../../assets/undraw_Mobile_login_re_9ntv.png")}
+          source={require("../../../../assets/man.png")}
           style={styles.homeImg}
           resizeMode='contain'
         />
+        <View style={styles.registerHeadingSection}>
+          <Text style={styles.registerHeading}>Register</Text>
+          <Text style={styles.registerPara}>Register as student enjoy to enjoy the app</Text>
+
+        </View>
       </View>
 
       <View style={styles.PublicLoginBottom}>
@@ -44,39 +50,55 @@ export default function StudentRegisterScreen() {
           </Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  PublicLogin: {
-    flex: 1,
-  },
-  PublicLoginTop: {
-    flex: 1,
-    alignItems: "center",
-  },
   PublicLoginBottom: {
-    flex: 3,
     justifyContent: "center",
     alignItems: "center",
   },
+  PublicLoginTop: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  registerHeadingSection: {
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  registerHeading: {
+    fontWeight: '700',
+    fontSize: 30,
+  },
+  registerPara: {
+    color: 'gray',
+  },
   homeImg: {
-    width: "50%",
-    height: "65%",
-    borderRadius : 10,
+    width: 150,
+    height: 150,
+    borderRadius: 10,
     marginHorizontal: 20,
-    marginTop: "15%",
+    marginTop: "10%",
   },
   input: {
     width: "80%",
-    margin: 15,
-    height: 40,
-    borderColor: "#7a42f4",
-    borderWidth: 1,
+    margin: 10,
+    height: 45,
+    borderColor: "#3A1347",
+    borderWidth: 1.5,
     borderRadius: 5,
     paddingVertical: 10,
+    fontWeight: '600',
     paddingHorizontal: 20,
+    shadowColor: '#3A1347',
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 0.5,
+    elevation: 2
   },
   forgotText: {
     width: "80%",
@@ -89,7 +111,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#3A1347",
     marginVertical: 10,
-    marginBottom : 7,
+    marginBottom: 7,
     color: "white",
     textAlign: "center",
     paddingVertical: 15,

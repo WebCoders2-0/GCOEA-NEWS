@@ -1,6 +1,8 @@
 import { View, Text,StyleSheet,Image,TouchableOpacity,ScrollView } from 'react-native';
 import React from 'react';
 import ScreenHeader from '../../component/Header/ScreenHeader';
+import { Link } from '@react-navigation/native';
+import Icon  from 'react-native-vector-icons/FontAwesome';
 
 const Profile = () => {
   return (
@@ -22,19 +24,19 @@ const Profile = () => {
             <View style={styles.cardDetails}>
                 <TouchableOpacity style={styles.Card}>
                 <Text style={styles.cardName}>Edit Profile</Text>
-                <Text style={styles.cardArrow}> {'>'} </Text>
+                <Text style={styles.cardArrow}> <Link to="/homeLogin"><Icon name="angle-right" size={30} color="black" /> </Link> </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.Card}>
                 <Text style={styles.cardName}>Uploaded News List</Text>
-                <Text style={styles.cardArrow}> {'>'} </Text>
+                <Text style={styles.cardArrow}> <Link to="/allNews"><Icon name="angle-right" size={30} color="black" /> </Link> </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.Card}>
                 <Text style={styles.cardName}>Add News</Text>
-                <Text style={styles.cardArrow}> {'>'} </Text>
+                <Text style={styles.cardArrow}><Link to="/addNews"><Icon name="angle-right" size={30} color="black" /> </Link></Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.Card}>
                 <Text style={styles.cardName}>Logout</Text>
-                <Text style={styles.cardArrow}> {'>'} </Text>
+                <Text style={styles.cardArrow}> <Link to="/viewNews"><Icon name="angle-right" size={30} color="black" /> </Link> </Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
@@ -70,10 +72,12 @@ const styles = StyleSheet.create({
     admin:{
         fontWeight:'700',
         fontSize:15,
-        backgroundColor:'gray',
-        width:60,
+        backgroundColor:'#E4E4E4',
+        width:80,
         borderRadius:10,
-        padding:5
+        padding:5,
+        marginVertical:5,
+        textAlign:'center'
     },
     profileHeading:{
         textAlign:'center',
@@ -90,9 +94,9 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
-        padding:10,
+        padding:15,
         paddingHorizontal:20,
-        backgroundColor:'gray',
+        backgroundColor:'#E4E4E4',
         margin:10,
         marginVertical:8,
         borderRadius:10,
