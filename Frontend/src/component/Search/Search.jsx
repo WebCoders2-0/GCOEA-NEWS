@@ -1,29 +1,61 @@
-import { View, Text,TextInput,StyleSheet,TouchableOpacity,Image } from 'react-native';
-import React from 'react';
+import { View, Text,TextInput,StyleSheet,TouchableOpacity,Image, ScrollView } from 'react-native';
+import React,{useEffect,useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Search = () => {
+const Search = ({updateNews}) => {
+
+    const [getInput,setGetInput] = useState('');
+
+
+    const getSerachResult = async (search_data,type) =>
+    {
+        try{
+            const token = await AsyncStorage.getItem('token');
+            uri = type === 'Search' ? `http://10.0.2.2:8000/api/filter-news/?search=${search_data}`: `http://10.0.2.2:8000/api/filter-news/?category=${search_data}`
+            console.log(uri);
+            const res = await axios.get(uri,{
+                headers:{
+                    'Authorization':`token ${token}`,
+                    'Content-Type':'application/json'
+                }
+            });
+            const data = await res.data;
+            updateNews(data);
+        } catch (err)
+        {
+            console.log(err);
+        }
+    }
+
+
+
   return (
     <View style={styles.MainSerchConainer}>
         <View style={styles.searchContainer}>
-        <TextInput placeholder="Email or Username" style={styles.input} />
+        <TextInput placeholder="Email or Username" style={styles.input} onChangeText={(value) => setGetInput(value)} value={getInput}
+        onKeyPress={() => getSerachResult(getInput,'Search')} />
         <TouchableOpacity style={styles.searchIcon}>
             <Icon name="search" size={25} color="#3A1347" />
         </TouchableOpacity>
         </View>
 
-        <View style={styles.Categories}>
-            <TouchableOpacity style={styles.CategoryName}>
+        <ScrollView horizontal={true} style={styles.Categories}>
+            <TouchableOpacity style={[styles.CategoryName,{marginLeft:3}]} onPress={() => getSerachResult('all','Search')}>
+                <Text>All News</Text>
+            </TouchableOpacity >
+            <TouchableOpacity style={styles.CategoryName} onPress={() => getSerachResult('Event','category')}>
                 <Text>All Events</Text>
             </TouchableOpacity >
-            <TouchableOpacity style={styles.CategoryName}>
+            <TouchableOpacity style={styles.CategoryName} onPress={() => getSerachResult('Scholarship','category')}>
                 <Text>Scholarship</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.CategoryName}>
+            <TouchableOpacity style={styles.CategoryName} onPress={() => getSerachResult('Notice','category')}>
                 <Text>Notices</Text>
             </TouchableOpacity>
 
-        </View>
+        </ScrollView>
     </View>
   )
 }
@@ -59,14 +91,14 @@ const styles = StyleSheet.create({
     },
     Categories:{
         flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'center',
         marginTop:10,
         margin:20,
+        padding:10,
     },
     CategoryName:{
         backgroundColor:'#E4E4E4',
         padding:10,
+        margin:10,
         paddingHorizontal:20,
         borderRadius:20,
         shadowColor:'#7F5DF0',

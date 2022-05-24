@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
-<<<<<<< Updated upstream
 # Create your models here.
 # class Student(models.Model):
 #     name = models.CharField(max_length=200,null=True,blank=True)
@@ -28,7 +27,6 @@ from django.utils.text import slugify
 #     def __str__(self):
 #         return str(self.student) + str(self.subject)
     
-=======
 
 class MainUser(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -50,6 +48,7 @@ class News(models.Model):
     slug = models.SlugField(max_length=100, unique=True,null=True,blank=True)
     title = models.CharField(max_length=10000)
     news_type = models.CharField(max_length=100)
+    user_type = models.CharField(max_length=300,default='Student')
     description = models.TextField(default='')
     image = models.ImageField(upload_to='news_pics',null=True,blank = True)
     created_datetime = models.DateTimeField(auto_now_add=True)
@@ -66,19 +65,18 @@ class News(models.Model):
         super(News, self).save(*args, **kwargs)
 
 class FavouriteNews(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(MainUser, on_delete=models.CASCADE)
     news = models.ForeignKey(News, on_delete=models.CASCADE)
     created_datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.user.username) + '-' + str(self.news.title)
+        return str(self.user.name) + ' - ' + str(self.news.title)
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(MainUser, on_delete=models.CASCADE)
     news = models.ForeignKey(News, on_delete=models.CASCADE)
     comment = models.TextField(default='')
     created_datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.user.username) + '-' + str(self.news.title)
->>>>>>> Stashed changes
+        return str(self.user.name) + '-' + str(self.news.title)

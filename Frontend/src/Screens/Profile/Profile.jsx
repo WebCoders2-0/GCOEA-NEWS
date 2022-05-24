@@ -1,10 +1,32 @@
 import { View, Text,StyleSheet,Image,TouchableOpacity,ScrollView } from 'react-native';
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import ScreenHeader from '../../component/Header/ScreenHeader';
 import { Link } from '@react-navigation/native';
 import Icon  from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../component/context';
 
-const Profile = () => {
+
+
+const Profile = (props) => 
+{
+    const [user,setUser] = useState([]);
+    const { logout } = React.useContext(AuthContext);
+
+    useEffect(() =>{
+        getUser();
+    },[]);
+
+    const getUser = async () =>{
+        try{
+            const userDetails = await AsyncStorage.getItem('user');
+            setUser(JSON.parse(userDetails));
+        } catch (err){
+            console.log(err);
+        }
+        
+    }
+
   return (
     <View style={styles.ProfileContainer}>
         <ScreenHeader />
@@ -15,28 +37,34 @@ const Profile = () => {
                     <Image style={styles.profilePic} source={require('../../../assets/event.jpeg')} />
                 </View>
                 <View style={styles.rightSecton}>
-                    <Text style={styles.name}>Aditya Chandrikapure</Text>
-                    <Text style={styles.usertype}>Student</Text>
-                    <Text style={styles.registerId}>19007002</Text>
-                    <Text style={styles.admin}>Admin</Text>
+                    <Text style={styles.name}>{user.name}</Text>
+                    <Text style={styles.usertype}>{user.user_type}</Text>
+                    <Text style={styles.registerId}>{user.register_id}</Text>
+                    {user.admin ? 
+                    <Text style={styles.admin}>Admin</Text>:null}
                 </View>
             </View>
             <View style={styles.cardDetails}>
                 <TouchableOpacity style={styles.Card}>
                 <Text style={styles.cardName}>Edit Profile</Text>
-                <Text style={styles.cardArrow}> <Link to="/homeLogin"><Icon name="angle-right" size={30} color="black" /> </Link> </Text>
+                <Text style={styles.cardArrow}><Icon name="angle-right" size={30} color="black" /></Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.Card}>
-                <Text style={styles.cardName}>Uploaded News List</Text>
-                <Text style={styles.cardArrow}> <Link to="/allNews"><Icon name="angle-right" size={30} color="black" /> </Link> </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.Card}>
-                <Text style={styles.cardName}>Add News</Text>
-                <Text style={styles.cardArrow}><Link to="/addNews"><Icon name="angle-right" size={30} color="black" /> </Link></Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.Card}>
+                {user.admin ?(
+                    <>
+                     <TouchableOpacity style={styles.Card}>
+                        <Text style={styles.cardName}>Uploaded News List</Text>
+                        <Text style={styles.cardArrow}> <Link to="/allNews"><Icon name="angle-right" size={30} color="black" /> </Link> </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.Card}>
+                        <Text style={styles.cardName}>Add News</Text>
+                        <Text style={styles.cardArrow}><Link to="/addNews"><Icon name="angle-right" size={30} color="black" /> </Link></Text>
+                    </TouchableOpacity>
+                    </>
+                ):null }
+               
+                <TouchableOpacity style={styles.Card} onPress={() => logout()}>
                 <Text style={styles.cardName}>Logout</Text>
-                <Text style={styles.cardArrow}> <Link to="/viewNews"><Icon name="angle-right" size={30} color="black" /> </Link> </Text>
+                <Text style={styles.cardArrow}><Icon name="angle-right" size={30} color="black" /></Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

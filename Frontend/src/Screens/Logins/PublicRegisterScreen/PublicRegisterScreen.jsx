@@ -1,5 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { Link } from '@react-navigation/native';
+import React,{useState,useEffect} from "react";
+import { Link ,navigation} from '@react-navigation/native';
+import axios from "axios";
 
 import {
   StyleSheet,
@@ -11,8 +13,34 @@ import {
   ScrollView
 } from "react-native";
 
-export default function PublicRegisterScreen() {
-  // const Stack = createNativeStackNavigator();
+import { AuthContext } from "../../../component/context";
+
+export default function PublicRegisterScreen(props) 
+{
+    const [name,setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [number, setNumber] = useState("");
+    const [password, setPassword] = useState("");
+
+
+    const RegisterHandle = async () =>{
+      try{
+          const res = await axios.post('http://10.0.2.2:8000/api/public_register/',{
+            name:name,
+            email:email,
+            mobile_no:number,
+            password:password,
+            verify_password:password,
+          });
+          const data = await res.data;
+          alert(data.msg);
+          props.navigation.navigate('publicLogin');
+      } catch (err){
+        alert(err.message);
+      }
+
+    };
+
 
   return (
     <ScrollView style={styles.PublicLogin}>
@@ -29,13 +57,13 @@ export default function PublicRegisterScreen() {
       </View>
 
       <View style={styles.PublicLoginBottom}>
-        <TextInput placeholder="Name" style={styles.input} />
-        <TextInput placeholder="Email" style={styles.input} />
-        <TextInput placeholder="Mobile No." style={styles.input} />
-        <TextInput placeholder="Password" style={styles.input} />
+        <TextInput placeholder="Name" onChangeText={value => setName(value)} value={name} style={styles.input} />
+        <TextInput placeholder="Email" onChangeText={value => setEmail(value)} value={email}  style={styles.input} />
+        <TextInput placeholder="Mobile No." onChangeText={value => setNumber(value)} value={number}  style={styles.input} />
+        <TextInput placeholder="Password" onChangeText={value => setPassword(value)} value={password} type={'password'}  style={styles.input} />
 
         <View style={styles.loginButtonWrapper}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={RegisterHandle}>
             <Text style={styles.loginButtonText}>Register</Text>
           </TouchableOpacity>
         </View>

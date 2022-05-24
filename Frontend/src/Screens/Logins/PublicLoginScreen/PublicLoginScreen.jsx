@@ -1,16 +1,18 @@
+import React,{useState,useEffect} from 'react';
 import { Link } from '@react-navigation/native';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  ScrollView
-} from "react-native";
+import {StyleSheet,Text,View,TouchableOpacity,Image,TextInput,ScrollView} from "react-native";
 
-export default function PublicLoginScreen() {
+import { AuthContext } from '../../../component/context';
+
+export default function PublicLoginScreen(props) 
+{
+
+  const [username,setUsername] = useState('');
+  const [password,setPassword] = useState('');
+
+  const { publicLoginHandle } = React.useContext(AuthContext);
+
   return (
     <ScrollView style={styles.PublicLogin}>
       <View style={styles.PublicLoginTop}>
@@ -27,13 +29,13 @@ export default function PublicLoginScreen() {
       </View>
 
       <View style={styles.PublicLoginBottom}>
-        <TextInput placeholder="Email or Username" style={styles.input} />
-        <TextInput placeholder="Password" style={styles.input} />
+        <TextInput placeholder="Email or Username" onChangeText={value => setUsername(value)} value={username} style={styles.input} />
+        <TextInput placeholder="Password" onChangeText={value => setPassword(value)} value={password}  style={styles.input} />
 
         <Text style={styles.forgotText}>Forgot Password ?</Text>
 
         <View style={styles.loginButtonWrapper}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => publicLoginHandle(username,password)}>
             <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
         </View>

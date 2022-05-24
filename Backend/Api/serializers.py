@@ -10,7 +10,7 @@ class MainUserSerializer(serializers.ModelSerializer):
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
-        fields = ('id', 'title', 'description', 'image', 'created_datetime')
+        fields = ('id', 'title', 'description', 'image', 'created_datetime','slug')
 
 class FavouriteNewsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,3 +21,4 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'user', 'news', 'comment', 'created_datetime')
+

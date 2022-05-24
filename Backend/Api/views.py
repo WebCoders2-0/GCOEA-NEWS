@@ -1,4 +1,5 @@
 
+from asyncio import constants
 from rest_framework.response import Response
 from rest_framework.views import APIView 
 from rest_framework import status
@@ -166,23 +167,28 @@ class CreateNews(APIView):
 # ============================================= Create News =================================================
 
 # ============================================= All News =================================================
-class AllNews(APIView):
+class GetNewsDetails(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request,*args, **kwargs):
         slug = request.query_params.get('slug')
+
         if slug is not None:
             if News.objects.filter(slug = slug).exists():
-                news = News.objects.filter(slug = slug)
-                news_serializer = NewsSerializer(news,many=False)
-                return Response(news_serializer.data, status=status.HTTP_200_OK)
+                news = News.objects.get(slug = slug)
+                comments = Comment.objects.filter(news = news)
+                comment_serializer = CommentSerializer(comments,many=True).data
+                i = 0
+                for comment in comments:
+                    user = MainUserSerializer(comment.user,many=False).data
+                    comment_serializer[i]['user'] = user
+                    i += 1
+                news_serializer = NewsSerializer(news,many=False).data
+                news_serializer['comments'] = comment_serializer
+                return Response(news_serializer, status=status.HTTP_200_OK)
             else:
                 return Response({'msg':'news is not found'},status=status.HTTP_404_NOT_FOUND)
         main_user = MainUser.objects.get(user = request.user)
-        news = []
-        if main_user.user_type == 'Student':
-            news = News.objects.filter(author__user_type = 'Student')
-        else:
-            news = News.objects.filter(author__user_type = 'Public')
+        news = News.objects.filter(author = main_user.id).order_by('created_datetime').reverse()
         serializer = NewsSerializer(news,many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -192,15 +198,27 @@ class FilterNews(APIView):
     def get(self,request,*args, **kwargs):
         search = request.query_params.get('search')
         category = request.query_params.get('category')
+        user_type = request.query_params.get('user_type')
 
         if search is not None:
-            news = News.objects.filter(title__icontains = search)
+            if search == 'all':
+                news = News.objects.all().order_by('created_datetime').reverse()
+            else:
+                news = News.objects.filter(title__icontains = search).order_by('created_datetime').reverse()
             news_serializer = NewsSerializer(news,many=True)
             return Response(news_serializer.data, status=status.HTTP_200_OK)
         if category is not None:
-            news = News.objects.filter(news_type = category)
+            news = News.objects.filter(news_type = category).order_by('created_datetime').reverse()
             news_serializer = NewsSerializer(news,many=True)
             return Response(news_serializer.data, status=status.HTTP_200_OK)
+        if user_type is not None:
+            if user_type == 'Public':
+                news = News.objects.all(for_user = user_type).order_by('created_datetime').reverse()
+            else:
+                news = News.objects.all().order_by('created_datetime').reverse()
+            news_serializer = NewsSerializer(news,many=True)
+            return Response(news_serializer.data, status=status.HTTP_200_OK)
+
 
         news = News.objects.all()
         serializer = NewsSerializer(news,many=True)
@@ -231,5 +249,49 @@ class EditNews(APIView):
 # ===================================== Edit News =================================================
 
         
+# ======================================== add comment ===================================
+class AddComment(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self,request,*args, **kwargs):
+        data = request.data
+        main_user = MainUser.objects.get(user = request.user.id)
+        if not main_user.admin:
+            return Response({'msg':'you are not admin user'},status=status.HTTP_406_NOT_ACCEPTABLE)
+        news = News.objects.get(slug = data['news'])
+        if len(data['comment']) == 0:
+            return Response({'msg':'please entry comment then send'},status=status.HTTP_411_LENGTH_REQUIRED)
 
+        serializer = CommentSerializer(data={'user':main_user.id,'news':news.id,'comment':data['comment']})
+        if serializer.is_valid():
+            serializer.save()
+            serializer = serializer.data
+            serializer['user'] = MainUserSerializer(main_user,many=False).data
+            return Response(serializer,status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+# ================================================ news favourite ==================================
+
+class AddToFavorite(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self,request,*args, **kwargs):
+        data = request.data
+        news = News.objects.get(slug=data['news'])
+        main_user = MainUser.objects.get(user = request.user.id)
+        
+        serializer = FavouriteNewsSerializer(data={'news':news.id,'user':main_user.id})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':'news is added in favourite'},status=200)
+        else:
+            return Response(serializer.errors,status=status.HTTP_404_NOT_FOUND)
+
+    def get(self,request,*args, **kwargs):
+        main_user = MainUser.objects.get(user = request.user.id)
+        favourite_news = FavouriteNews.objects.filter(user = main_user).order_by('created_datetime').reverse()
+        newsdata = []
+        for fav in favourite_news:
+            news = NewsSerializer(News.objects.get(id = fav.news.id),many=False).data
+            newsdata.append(news)
+        return Response(news,status=status.HTTP_200_OK)

@@ -16,11 +16,11 @@ const About = () => {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.creatercard}>
                         <Image style={styles.createrImage} source={require('../../../assets/event.jpeg')} />
-                        <Text style={styles.creatorName}>Aditya Chandrikapure</Text>
+                        <Text style={styles.creatorName}>Ankush Chavhan</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.creatercard}>
                         <Image style={styles.createrImage} source={require('../../../assets/event.jpeg')} />
-                        <Text style={styles.creatorName}>Aditya Chandrikapure</Text>
+                        <Text style={styles.creatorName}>Raksha Jogi</Text>
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.GuideHeading}>Guide</Text>
@@ -29,8 +29,8 @@ const About = () => {
                         <Image style={styles.guideProfile} source={require('../../../assets/event.jpeg')} />
                     </View>
                     <View style={styles.guideDetails}>
-                        <Text style={styles.guideName}>Guide Name</Text>
-                        <Text style={styles.college}>Gcoe amravati</Text>
+                        <Text style={styles.guideName}>Dr. P. B. Ambhore</Text>
+                        <Text style={styles.college}>GCOE Amravati</Text>
                     </View>
                 </View>
 

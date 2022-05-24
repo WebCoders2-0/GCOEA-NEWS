@@ -1,5 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { Link } from '@react-navigation/native';
+import React, { useState } from "react";
+import axios from 'axios';
 
 import {
   StyleSheet,
@@ -12,7 +14,31 @@ import {
 } from "react-native";
 
 
-export default function StudentRegisterScreen() {
+export default function StudentRegisterScreen(props) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [registerId, setRegisterId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleStudentRegister = async () => {
+    try {
+      const res = await axios.post("http://10.0.2.2:8000/api/student_register/", {
+        name: name,
+        email: email,
+        mobile_no: number,
+        register_id: registerId,
+        password: password,
+        verify_password: password,
+      });
+      const data = await res.data;
+      alert(data.msg);
+      props.navigation.navigate('studentLogin');
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
   return (
     <ScrollView style={styles.PublicLogin}>
       <View style={styles.PublicLoginTop}>
@@ -29,16 +55,16 @@ export default function StudentRegisterScreen() {
       </View>
 
       <View style={styles.PublicLoginBottom}>
-        <TextInput placeholder="Name" style={styles.input} />
-        <TextInput placeholder="Register Id" style={styles.input} />
-        <TextInput placeholder="Email" style={styles.input} />
-        <TextInput placeholder="Mobile No." style={styles.input} />
-        <TextInput placeholder="Password" style={styles.input} />
+        <TextInput onChangeText={value => setName(value)} value={name} placeholder="Name" style={styles.input} />
+        <TextInput onChangeText={value => setRegisterId(value)} value={registerId} placeholder="Register Id" style={styles.input} />
+        <TextInput onChangeText={value => setEmail(value)} value={email} placeholder="Email" style={styles.input} />
+        <TextInput onChangeText={value => setNumber(value)} value={number} placeholder="Mobile No." style={styles.input} />
+        <TextInput onChangeText={value => setPassword(value)} value={password} placeholder="Password" style={styles.input} />
 
         {/* <Text style={styles.forgotText}>Forgot Password ?</Text> */}
 
         <View style={styles.loginButtonWrapper}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleStudentRegister}>
             <Text style={styles.loginButtonText}>Register</Text>
           </TouchableOpacity>
         </View>

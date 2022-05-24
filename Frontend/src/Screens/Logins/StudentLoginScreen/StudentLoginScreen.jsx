@@ -1,17 +1,16 @@
 import { Link } from '@react-navigation/native';
 import {StatusBar} from 'react-native';
+import React, {useState} from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView } from "react-native";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  ScrollView
-} from "react-native";
+import { AuthContext } from '../../../component/context';
 
-export default function StudentLoginScreen() {
+export default function StudentLoginScreen(props) 
+{
+  const [registerId, setRegisterId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { studentLoginHandle } = React.useContext(AuthContext);
 
   return (
     <ScrollView style={styles.PublicLogin}>
@@ -28,13 +27,13 @@ export default function StudentLoginScreen() {
       </View>
 
       <View style={styles.PublicLoginBottom}>
-        <TextInput placeholder="Register Id" style={styles.input} />
-        <TextInput placeholder="Password" style={styles.input} />
+        <TextInput onChangeText={value => setRegisterId(value)} value={registerId} placeholder="Register Id" style={styles.input} />
+        <TextInput onChangeText={value => setPassword(value)} value={password} placeholder="Password" secureTextEntry={true} style={styles.input} />
 
         <Text style={styles.forgotText}>Forgot Password ?</Text>
 
         <View style={styles.loginButtonWrapper}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => studentLoginHandle(registerId,password)}>
             <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
         </View>

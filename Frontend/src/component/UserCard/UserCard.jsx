@@ -3,11 +3,14 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-const UserCardSection = ({ title, img, datetime }) =>{
+const UserCardSection = ({ title, img, datetime }) =>
+{
     return (
         <View style={styles.newsCardContainer}>
         <TouchableOpacity style={styles.newsCardLeft}>
-            <Image source={img} style={styles.newsImage} />
+            {img !== null?(
+                <Image source={{uri:'http://10.0.2.2:8000' + img}} style={styles.newsImage} />
+            ):<Image source={require('../../../assets/event.jpeg')} style={styles.newsImage} />}
         </TouchableOpacity>
         <View style={styles.newsCardRight}>
             <TouchableOpacity>
@@ -31,14 +34,12 @@ const UserCardSection = ({ title, img, datetime }) =>{
     )
 }
 
-const UserCard = () => {
+const UserCard = ({news}) => {
     return (
         <ScrollView>
-            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <UserCardSection title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
+            {news !== null ?(news.map(nws =>{
+                return (<UserCardSection key={nws.id} title={nws.title} img={nws.image} datetime={nws.created_datetime}/>)
+            })):<Text>Not at added the data</Text>}
         </ScrollView>
     )
 }
@@ -93,6 +94,9 @@ const styles = StyleSheet.create({
         top: 100,
         left:60,
         flexDirection:'row',
+    },
+    Newsdatetime:{
+        width:150,
     },
     icons:{
         marginHorizontal:8

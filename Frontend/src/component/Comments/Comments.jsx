@@ -1,18 +1,20 @@
 import { View, Text,StyleSheet,Image } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 
-const Comments = () => {
+const Comments = ({comment}) => 
+{
+
   return (
     <View style={styles.commentsSection}>
       <View style={styles.leftProfile}>
           <Image source={require('../../../assets/event.jpeg')} style={styles.commentProfilePic} />
       </View>
       <View styles={styles.rightContent}>
-          <Text style={styles.commenterName}>Aditya Chandrikapure</Text>
-          <Text style={styles.commenterType}>Student</Text>
+          <Text style={styles.commenterName}>{comment['user']['name']}</Text>
+          <Text style={styles.commenterType}>{comment['user']['user_type']}</Text>
           <Text style={styles.commentContent}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. A
-              spernatur delectus animi quam fuga quisquam. Itaque facere repudiandae numquam. Eligendi, quos.
+              {comment.comment}
           </Text>
       </View>
     </View>

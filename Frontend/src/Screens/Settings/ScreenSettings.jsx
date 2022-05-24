@@ -1,10 +1,15 @@
 import { View, Text,StyleSheet,TouchableOpacity } from 'react-native';
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import ScreenHeader from '../../component/Header/ScreenHeader';
 import  Icon  from 'react-native-vector-icons/FontAwesome';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Link } from '@react-navigation/native';
+import { AuthContext } from '../../component/context';
 const ScreenSettings = () => {
+
+  const {logout}  = React.useContext(AuthContext);
+  
   return (
     <View style={styles.SettingsContainer}>
       <ScreenHeader />
@@ -26,7 +31,7 @@ const ScreenSettings = () => {
           <Text style={styles.cardName}>Feedback</Text>
           <Text style={styles.cardArrow}> <Icon name="angle-right" size={30} color="black" /> </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.Card}>
+        <TouchableOpacity style={styles.Card} onPress={() => logout()}>
           <Text style={styles.cardName}>Logout</Text>
           <Text style={styles.cardArrow}> <Icon name="angle-right" size={30} color="black" /> </Text>
         </TouchableOpacity>

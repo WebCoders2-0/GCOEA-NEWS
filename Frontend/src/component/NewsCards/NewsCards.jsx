@@ -1,16 +1,19 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native'; 
 
 
-const NewsCard = ({ title, img, datetime }) =>{
+const NewsCard = ({ title, img, datetime,slug }) =>{
+    const navigator = useNavigation();
     return (
         <View style={styles.newsCardContainer}>
-        <TouchableOpacity style={styles.newsCardLeft}>
-            <Image source={img} style={styles.newsImage} />
+        <TouchableOpacity style={styles.newsCardLeft} onPress={() => navigator.navigate('viewNews',{slug:slug})}>
+            {img !== "http://10.0.2.2:8000null" ? <Image source={{uri:img}} style={styles.newsImage} />:
+            <Image source={require('../../../assets/event.jpeg')} style={styles.newsImage} />}
         </TouchableOpacity>
         <View style={styles.newsCardRight}>
-            <TouchableOpacity style={styles.newsTitleSection}>
+            <TouchableOpacity style={styles.newsTitleSection} onPress={() => navigator.navigate('viewNews',{slug:slug})}>
                 <Text style={styles.Newstitle}>{title}</Text>
             </TouchableOpacity>
             <Text style={styles.Newsdatetime}>{datetime}</Text>
@@ -23,14 +26,13 @@ const NewsCard = ({ title, img, datetime }) =>{
     )
 }
 
-const NewsCards = () => {
+const NewsCards = ({news,navigation}) => {
     return (
         <ScrollView>
-            <NewsCard title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <NewsCard title={'Hello world Gcoea rhrrr'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <NewsCard title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <NewsCard title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
-            <NewsCard title={'Hello world Gcoea'} img={require('../../../assets/event.jpeg')} datetime={'22 Nov 2022'}/>
+            {news !== null ? (news.map((nws) =>{
+                return (<NewsCard key={nws.id} slug={nws.slug} title={nws.title} img={"http://10.0.2.2:8000"+ nws.image} datetime={nws.created_datetime} />)
+            })
+            ):<Text style={{textAlign:'center',fontWeight:'700',fontSize:18,marginTop:20}}>No News is added till now...</Text>}
         </ScrollView>
     )
 }
@@ -76,6 +78,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         width:150,
         overflow:'hidden',
+    },
+    Newsdatetime:{
+        width:150,
     },
     favoriteImg: {
         position: 'absolute',

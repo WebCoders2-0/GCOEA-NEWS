@@ -1,18 +1,19 @@
 import React from 'react';
 import { View, Text,StyleSheet,Image,TouchableOpacity, Settings } from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-// ======================= login screen =====================================
 
-import HomeLoginScreen from '../../Screens/Logins/HomeLoginScreen/HomeLoginScreen';
-import PublicLoginScreen from '../../Screens/Logins/PublicLoginScreen/PublicLoginScreen';
-import PublicRegisterScreen from '../../Screens/Logins/PublicRegisterScreen/PublicRegisterScreen';
-import StudentRegisterScreen from '../../Screens/Logins/StudentRegisterScreen/StudentRegisterScreen';
-import StudentLoginScreen from '../../Screens/Logins/StudentLoginScreen/StudentLoginScreen';
 
-// ======================= login screen =====================================
+// ======================== user screen ======================= //
+
+import AddNews from '../../Screens/AddNews/AddNews';
+import AllNews from '../../Screens/AllNews/AllNews';
+import ViewNews from '../../Screens/ViewNews/ViewNews';
+
+// ======================== user screen ======================= // 
+
 
 // ---------------main screens ------------------------------- //
 import Profile from '../../Screens/Profile/Profile';
@@ -22,15 +23,7 @@ import About from '../../Screens/About/About';
 import Home from '../../Screens/HomeScreen/Home';
 // ---------------main screens ------------------------------- //
 
-// ======================== user screen ======================= //
-
-import AddNews from '../../Screens/AddNews/AddNews';
-import AllNews from '../../Screens/AllNews/AllNews';
-import ViewNews from '../../Screens/ViewNews/ViewNews';
-
-// ======================== user screen ======================= //
 const Stack = createNativeStackNavigator();
-
 
 const Tab = createBottomTabNavigator();
 
@@ -154,21 +147,18 @@ const Tabs = () => {
 }
 
 
-function AnotherNevigator() {
-    return (
-      <Stack.Navigator>
-          <Stack.Screen name="tab" component={Tabs} options={{ headerShown: false }}/>
-          <Stack.Screen name="homeLogin" component={HomeLoginScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="studentRegister" component={StudentRegisterScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="studentLogin" component={StudentLoginScreen} options={{ headerShown: false }}/> 
-          <Stack.Screen name="publicLogin" component={PublicLoginScreen} options={{ headerShown: false }}/> 
-          <Stack.Screen name="publicRegister" component={PublicRegisterScreen} options={{ headerShown: false }}/> 
-          <Stack.Screen name="addNews" component={AddNews} options={{ headerShown: false }}/> 
-          <Stack.Screen name="allNews" component={AllNews} options={{ headerShown: false }}/> 
-          <Stack.Screen name="viewNews" component={ViewNews} options={{ headerShown: false }}/> 
-       </Stack.Navigator>
-    );
-  }
+const AllNavigation = () =>
+{
+    return(
+        <Stack.Navigator>
+            <Stack.Screen name="mainTab" component={Tabs} options={{ headerShown: false }} />
+            <Stack.Screen name="addNews" component={AddNews} options={{ headerShown: false }}/> 
+            <Stack.Screen name="allNews" component={AllNews} options={{ headerShown: false }}/> 
+            <Stack.Screen name="viewNews" component={ViewNews} options={{ headerShown: false }}/> 
+        </Stack.Navigator>
+    )
+
+}
 
 const styles = StyleSheet.create({
     shadow:{
@@ -186,5 +176,4 @@ const styles = StyleSheet.create({
     }
 })
 
-// export default Tabs;
-export default AnotherNevigator;
+export default AllNavigation;

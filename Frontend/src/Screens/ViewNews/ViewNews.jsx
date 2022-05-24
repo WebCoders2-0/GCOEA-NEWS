@@ -1,23 +1,74 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 // import Pdf from 'react-native-pdf';
 import { View, Text,StyleSheet,Image,ScrollView,TextInput,TouchableOpacity } from 'react-native';
 import ScreenHeader from '../../component/Header/ScreenHeader';
 import Comments from '../../component/Comments/Comments';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ViewNews = (props) => 
+const ViewNews = ({route, navigation}) => 
 {
-    const source = {};
-    // const source = { uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', cache: true };
+    const [news,setNews] = useState([]);
+    const [comments,setComments] = useState([]);
+    const { slug } = route.params;
+    const [commentContent,setCommentContent] = useState('');
+
+    useEffect(() =>{
+        getNewsDetails();
+    },[]);
+
+    const getNewsDetails =async () =>{
+        try{
+            const token = await AsyncStorage.getItem('token');
+            const res = await axios.get(`http://10.0.2.2:8000/api/get-news/?slug=${slug}`,{
+                headers:{
+                    'Authorization':`token ${token}`,
+                    'Content-Type':'application/json'
+                }
+            });
+            const data = await res.data;
+            console.log(data);
+            setNews(data);
+            setComments(data.comments);
+        } catch (err){
+            console.log(err.message);
+        }
+    };
+
+
+    const sendComment = async () =>{
+        try{
+            console.log('sendCOmment');
+            const token = await AsyncStorage.getItem('token');
+            const res = await axios.post('http://10.0.2.2:8000/api/add-comment/',{
+                comment:commentContent,
+                news:news.slug
+            },{
+                headers:{
+                    'Authorization':`token ${token}`,
+                    'Content-Type':'application/json'
+                }
+            })
+            const data = await res.data;
+            console.log(data);
+            setComments([...comments,data]);
+
+        } catch (err){
+            console.log(err);
+        }
+    }
+
+    const source = { uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', cache: true };
   return (
     <View style={styles.viewNewsContainer}>
       <ScreenHeader />
 
       <ScrollView style={{MarginBottom:300,}}>
-        <Text style={styles.newsTitle}>News Title</Text>
-        <Text style={styles.Newsdatetime}>Datetime</Text>
+        <Text style={styles.newsTitle}>{news.title}</Text>
+        <Text style={styles.Newsdatetime}>{news.created_datetime}</Text>
             {source ? (<View style={styles.PdfViewer}>
                 {/* <Pdf
-                        source={source}
+                        source={source};
                         onLoadComplete={(numberOfPages,filePath) => {
                             console.log(`Number of pages: ${numberOfPages}`);
                         }}
@@ -32,33 +83,33 @@ const ViewNews = (props) =>
                         }}
                         style={{flex:1,}}/> */}
 
-                <Image style={styles.NewsEventPhoto} source={require('../../../assets/event.jpeg')}/>
+                {news.image !== null ?<Image style={styles.NewsEventPhoto} source={{uri :'http://10.0.2.2:8000' + news.image }}/>:
+                <Image style={styles.NewsEventPhoto} source={require('../../../assets/event.jpeg')}/> }
+
+                
                 <View style={styles.newsContent} >
-                    <Text style={styles.newsconetent}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque voluptatibus doloremque libero. 
-                        Sunt aut eaque enim voluptatibus iure illo quia, sequi minima rem, fugiat voluptas quae, voluptatum nobis.
-                        Iusto, doloremque.
-                    </Text>
+                    <Text style={styles.newsconetent}>{news.description}</Text>
                 </View>
             </View>):(<View style={styles.EventContainer}>
-                <Image style={styles.NewsEventPhoto} source={require('../../../assets/event.jpeg')}/>
-                <View style={styles.newsContent}>
-                    <Text style={styles.newsconetent}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque voluptatibus doloremque libero. 
-                        Sunt aut eaque enim voluptatibus iure illo quia, sequi minima rem, fugiat voluptas quae, voluptatum nobis.
-                        Iusto, doloremque.
-                    </Text>
+                {news.image !== null ?<Image style={styles.NewsEventPhoto} source={{uri :'http://10.0.2.2:8000' + news.image }}/>:
+                <Image style={styles.NewsEventPhoto} source={require('../../../assets/event.jpeg')}/> }
+
+                
+                <View style={styles.newsContent} >
+                    <Text style={styles.newsconetent}>{news.description}</Text>
                 </View>
             </View>)}
 
             <Text style={styles.commentHeading}>Comments</Text>
             <View style={styles.commentSection}>
-                <Comments />
-                <Comments />
-                <Comments />
+                {comments.length !== 0 ? comments.map((comment) =>{
+                    return(<Comments key={comment.id} comment={comment} />)
+                }):<Text style={{textAlign:'center'}}>empty comment</Text>}
             </View>
       <Text style={styles.addcommentHeading}>Add Comment</Text>
       <View style={styles.AddComment}>
-          <TextInput placeholder='add our Comment' style={styles.commentBox} />
-          <TouchableOpacity style={styles.commentBtn}>
+          <TextInput placeholder='add our Comment' style={styles.commentBox} onChangeText={(value) => setCommentContent(value)} value={commentContent} />
+          <TouchableOpacity style={styles.commentBtn} onPress={() => sendComment()}>
               <Text style={styles.commentbtnText}>Send</Text>
           </TouchableOpacity>
       </View>
